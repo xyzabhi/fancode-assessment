@@ -1,6 +1,6 @@
 // MovieCard.tsx
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 
 interface MovieCardProps {
   title: string;
@@ -9,46 +9,46 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ title, image, rating }) => {
+  console.log(image, "image is");
+
   return (
     <View style={styles.card}>
-      <Image source={image} style={styles.image} resizeMode="cover" />
-      <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.rating}>{rating.toFixed(1)}</Text>
-      </View>
+      <ImageBackground
+        source={require("../assets/movie2.jpg")}
+        style={styles.image}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.rating}>{rating.toFixed(1)}</Text>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 20,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    width: "48%", // Adjust as needed
+    marginBottom: 10,
   },
   image: {
-    width: '100%',
-    height: 200,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    // width: "100%",
+    aspectRatio: 0.75, // Adjust aspect ratio as needed
+    justifyContent: "flex-end", // Aligns the overlay at the bottom
   },
-  content: {
-    padding: 10,
+  overlay: {
+  margin:5
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    color: "white",
+    fontSize:14,
+    fontWeight: "bold",
+   marginBottom:2
   },
   rating: {
-    fontSize: 16,
-    color: '#666',
+    color: "white",
+    fontSize: 12,
   },
 });
 
