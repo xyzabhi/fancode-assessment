@@ -1,6 +1,6 @@
 // Pill.tsx
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
 interface PillProps {
   label: string;
@@ -12,14 +12,13 @@ interface PillProps {
 const Pill: React.FC<PillProps> = ({ label, isSelected, onPress, style }) => {
   return (
     <TouchableOpacity
-      style={[
-        styles.pill,
-        isSelected ? styles.selectedPill : null,
-        style,
-      ]}
+      activeOpacity={1}
+      style={[styles.pill, isSelected ? styles.selectedPill : null, style]}
       onPress={onPress}
     >
-      <Text style={[styles.pillText, isSelected ? styles.selectedPillText : null]}>
+      <Text
+        style={[styles.pillText, isSelected ? styles.selectedPillText : null]}
+      >
         {label}
       </Text>
     </TouchableOpacity>
@@ -28,20 +27,20 @@ const Pill: React.FC<PillProps> = ({ label, isSelected, onPress, style }) => {
 
 const styles = StyleSheet.create({
   pill: {
-    backgroundColor: '#484848',
+    backgroundColor: "#484848",
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginHorizontal: 5,
   },
   selectedPill: {
-    backgroundColor: '#F0283C',
+    backgroundColor: "#F0283C",
   },
   pillText: {
-    color: '#F5F5F5',
+    color: "#F5F5F5",
   },
   selectedPillText: {
-    color: '#fff',
+    color: "#fff",
   },
 });
 

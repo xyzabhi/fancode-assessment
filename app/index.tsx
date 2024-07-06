@@ -1,52 +1,58 @@
 import MovieCard from "@/components/movie-card";
 import Pill from "@/components/pills";
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { fetchData } from "./apis/apis";
+import { apiUrl, headers } from "@/constants/constant";
 
 const App: React.FC = () => {
-  const items = ["Action", "Comedy", "Drama", "Fantasy", "Sci-Fi"];
-  const [selectedPill, setSelectedPill] = useState<string | null>(items[3]);
+
+
+  const [genres,setGenres]=useState<genreType[]>([])
+  const [selectedPill, setSelectedPill] = useState<string | null>();
 
   const handlePillPress = (item: string) => {
     setSelectedPill(selectedPill === item ? null : item);
   };
 
+  useEffect(() => {
+    fetchData(apiUrl, headers)
+      .then((data) => {
+       setGenres(data.genres);
+        console.log("API response:", JSON.stringify(data.genres));
+      })
+      .catch((error) => {
+        console.error("API error:", error);
+      });
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.productLogo}>MOVIEFIX</Text>
+
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.pillsContainer}
         >
-          {items.map((item) => (
+          {genres.map((item:genreType) => (
             <Pill
-              key={item}
-              label={item}
-              isSelected={selectedPill === item}
-              onPress={() => handlePillPress(item)}
+              key={item.id}
+              label={item.name}
+              isSelected={selectedPill === item.name}
+              onPress={() => handlePillPress(item.name)}
             />
           ))}
         </ScrollView>
       </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.contentContainer}>
-          
-          <MovieCard title={"Avengers"} image="../assets/movie2.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie2.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie3.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-          <MovieCard title={"Avengers"} image="../assets/movie1.jpg" rating={0} />
-
-          {/* Add more images as needed */}
-        </View>
-      </ScrollView>
     </View>
   );
 };
@@ -55,6 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
+    marginTop: 10,
   },
   headerContainer: {
     borderBottomWidth: 1,
@@ -65,6 +72,7 @@ const styles = StyleSheet.create({
   pillsContainer: {
     // paddingHorizontal: 20,
   },
+  headerSection: {},
 
   title: {
     fontSize: 24,

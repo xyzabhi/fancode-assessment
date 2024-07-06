@@ -14,13 +14,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, image, rating }) => {
   return (
     <View style={styles.card}>
       <ImageBackground
-        source={require("../assets/movie2.jpg")}
+        source={require("../assets/movie3.jpg")}
         style={styles.image}
         resizeMode="cover"
       >
         <View style={styles.overlay}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.rating}>{rating.toFixed(1)}</Text>
+          <Text style={styles.rating}>{rating.toFixed(1)} ★</Text>
         </View>
       </ImageBackground>
     </View>
@@ -38,15 +38,18 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end", // Aligns the overlay at the bottom
   },
   overlay: {
-  margin:5
+    margin: 5,
   },
   title: {
     color: "white",
-    fontSize:14,
+    fontSize: 14,
     fontWeight: "bold",
-   marginBottom:2
+    marginBottom: 2,
   },
   rating: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     color: "white",
     fontSize: 12,
   },
